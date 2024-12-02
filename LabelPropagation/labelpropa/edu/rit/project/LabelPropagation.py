@@ -5,6 +5,67 @@ import sys
 import json
 import traceback
 
+'''
+Implementation of the paper - "Near linear time algorithm to detect community structures in large-scale networks"
+https://arxiv.org/pdf/0709.2938
+'''
+
+
+def init(driver):
+    query = """
+        MATCH (n:Node) SET n.label = toString(n.id)
+    """
+
+    with driver.session(database="neo4j") as session:
+        session.run(query)
+
+def get_communities(driver):
+    query = """
+        MATCH (n)
+        WITH DISTINCT n.label AS label
+        RETURN COUNT(label) AS communities
+    """
+    with driver.session() as session:
+        result = session.run(query)
+        result = result.single()["communities"]
+
+    return result
+
+
+
+def label_propagation(driver, repetitions=1, tolerance = 10, writer=None):
+
+    prev = 0
+
+    for t in range(repetitions):
+        # writer.write(f"[INFO]   Repeat = {t+1}\n")
+
+        curr = get_communities(driver)
+
+        # writer.write(f"[INFO]   Communities found = {curr}\n")
+
+        while abs(curr - prev) > tolerance:
+            query = """
+                MATCH (n)
+                WITH n
+                ORDER BY rand()
+                MATCH (n)-[]->(neighbor)
+                WITH n, neighbor.label AS neighborLabel
+                WITH n, neighborLabel, COUNT(neighborLabel) AS frequency
+                WITH n, COLLECT({label: neighborLabel, count: frequency}) AS labelCounts
+                WITH n, labelCounts, MAX(item.count) AS maxCount
+                WITH n, [item IN labelCounts WHERE item.count = maxCount] AS majorityLabels
+                WITH n, majorityLabels[toInteger(rand() * SIZE(majorityLabels))].label AS selectedLabel
+                SET n.label = selectedLabel
+                RETURN n.label AS updatedLabel, n
+            """
+            with driver.session() as session:
+                session.run(query)
+
+            prev = curr
+        
+    # writer.write(f"[INFO]   Done. Influence of seed node id:{seed_id} => {f_seed}\n\n\n")
+
 def main():
     neo4j_url = sys.argv[1]
     neo4j_folder = sys.argv[2]
@@ -20,12 +81,13 @@ def main():
 
         for query in contents:
             db_name = query["database"]
+
             with get_neo4j_connection(neo4j_folder, db_name, neo4j_url) as driver:
                 driver.verify_connectivity()
 
-                with driver.session(database="neo4j") as session:
-                    # TODO label propagation code
-                    pass
+                init(driver)
+
+                label_propagation(driver)
 
 
         driver = get_neo4j_connection(neo4j_folder, 'fake-db', neo4j_url)
