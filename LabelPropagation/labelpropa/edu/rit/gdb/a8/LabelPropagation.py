@@ -93,7 +93,7 @@ def main():
             with get_neo4j_connection(neo4j_folder, db_name, neo4j_url) as driver:
                 driver.verify_connectivity()
 
-                init(driver)
+                # init(driver)
 
                 label_propagation(driver, repetitions=t, tolerance=epsilon, writer=f)
 

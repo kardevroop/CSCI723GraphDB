@@ -1,0 +1,87 @@
+{
+	"__comment__" : "This is the Neo4j connection when you need multiple databases. This is because Neo4j community edition does not allow multiple databases as the same time. Thank you, Neo4j!",
+	"database_neo4j" : {
+		"__comment__": "Use 'bolt://localhost:[port]' to connect to your local Neo4j database.",
+		"url" : "bolt://localhost:7687",
+		"__comment__" : "This is the folder in which many Neo4j databases are present. For instance, if you use ./SNA/, ./SNA/X/ is expected to contain database X.",
+		"folder" : "/Users/devroopkar/Documents/RIT/Fall 2024/CSCI 723/SNA_TopDown_export/"
+	},
+
+	"__comment__" : "This is the name of the file that will contain everything (see below).",
+	"in_file" : "query_q8.txt",
+
+
+
+	
+	
+	"__comment__" : "This is the name of the question, in other words, the folder we will be checking.",
+	"name" : "LabelPropagation",
+	
+	"maxTimeMin" : 30,
+	"maxMemory" : 128,
+
+	"__comment__" : "These are the contents of files we will create before calling the program.",
+	"before_files" : [
+		{"file" : "$in_file", "contents" : [
+			"{\"database\":\"Email-Enron\", \"repetitions\":100, \"tolerance\":0}",
+			"{\"database\":\"ca-AstroPh\", \"repetitions\":100, \"tolerance\":0}",
+			"{\"database\":\"ca-HepPh\", \"repetitions\":100, \"tolerance\":0}",
+			"{\"database\":\"com-amazon\", \"repetitions\":100, \"tolerance\":0}",
+			"{\"database\":\"com-dblp\", \"repetitions\":100, \"tolerance\":0}",
+			"{\"database\":\"com-youtube\", \"repetitions\":100, \"tolerance\":0}"
+		]}
+	],
+
+	"__comment__" : "These are Cypher queries that will be run before running.",
+	"before_neo4j_queries" : [
+		{"database": "Email-Enron", "query": "MATCH (n:Node) CALL {WITH n SET n.seed_label = n.id} IN TRANSACTIONS OF 1000 ROWS"},
+		{"database": "ca-AstroPh", "query": "MATCH (n:Node) CALL {WITH n SET n.seed_label = n.id} IN TRANSACTIONS OF 1000 ROWS"},
+		{"database": "ca-HepPh", "query": "MATCH (n:Node) CALL {WITH n SET n.seed_label = n.id} IN TRANSACTIONS OF 1000 ROWS"},
+		{"database": "com-amazon", "query": "MATCH (n:Node) CALL {WITH n SET n.seed_label = n.id} IN TRANSACTIONS OF 1000 ROWS"},
+		{"database": "com-dblp", "query": "MATCH (n:Node) CALL {WITH n SET n.seed_label = n.id} IN TRANSACTIONS OF 1000 ROWS"},
+		{"database": "com-youtube", "query": "MATCH (n:Node) CALL {WITH n SET n.seed_label = n.id} IN TRANSACTIONS OF 1000 ROWS"},
+
+
+		{"database": "fake-db", "query": "MATCH (n:Node) CALL {WITH n REMOVE n.psi} IN TRANSACTIONS OF 1000 ROWS"}
+	],
+
+	"__comment__" : "These are the input parameters provided to your program in order.",
+	"input_command_line" : [{"value":"$database_neo4j.url"}, {"value":"$database_neo4j.folder"},
+		{"value":"$in_file"}],
+	
+	
+	"__comment__" : "These are the test cases to run in order.",
+	"test_cases" : [
+		{
+			"type" : "Neo4jResultSet",
+			"database" : "Email-Enron",
+			"query" : "MATCH (n:Node) WITH DISTINCT n.seed_label AS label RETURN COUNT(label) AS communities",
+			"expected" : [{"communities": 20185}]
+		},
+		{
+			"type" : "Neo4jResultSet",
+			"database" : "ca-AstroPh",
+			"query" : "MATCH (n:Node) WITH DISTINCT n.seed_label AS label RETURN COUNT(label) AS communities",
+			"expected" : [{"communities": 5445}]
+		},
+		{
+			"type" : "Neo4jResultSet",
+			"database" : "ca-HepPh",
+			"query" : "MATCH (n:Node) WITH DISTINCT n.seed_label AS label RETURN COUNT(label) AS communities",
+			"expected" : [{"communities": 4136}]
+		},
+		{
+			"type" : "Neo4jResultSet",
+			"database" : "com-amazon",
+			"query" : "MATCH (n:Node) WITH DISTINCT n.seed_label AS label RETURN COUNT(label) AS communities",
+			"expected" : [{"communities": 68930}]
+		},
+		{
+			"type" : "Neo4jResultSet",
+			"database" : "com-dblp",
+			"query" : "MATCH (n:Node) WITH DISTINCT n.seed_label AS label RETURN COUNT(label) AS communities",
+			"expected" : [{"communities": 127966}]
+		}
+	]
+
+}

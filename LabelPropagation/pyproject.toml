@@ -1,0 +1,17 @@
+[build-system]
+requires = [ "poetry-core",]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "prob"
+version = "0.1.0"
+description = "Project"
+authors = [ "Devroop Kar <dk7405@g.rit.edu>",]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+neo4j = "^5.19.0"
+
+[tool.poetry.scripts]
+entry-point = "labelpropa.edu.rit.gdb.a8.LabelPropagation:main"
