@@ -4,6 +4,7 @@ import time
 import sys
 import json
 import traceback
+import copy
 
 '''
 Implementation of the paper - "Near linear time algorithm to detect community structures in large-scale networks"
@@ -29,6 +30,120 @@ def get_communities(driver):
 
     return result
 
+def calculate_jaccard_similarity(a: set = None, b:set = None):
+    a_and_b = a.intersection(b)
+    a_or_b = a.union(b)
+
+    return len(a_and_b) * 1.0 / len(a_or_b)
+
+def calculate_sorensen_similarity(a: set = None, b:set = None):
+    a_and_b = a.intersection(b)
+
+    return len(a_and_b) * 2.0 / (len(a) + len(b))
+
+def calculate_overlap_similarity(a: set = None, b:set = None):
+    a_and_b = a.intersection(b)
+
+    return len(a_and_b) * 1.0 / min(len(a), len(b))
+
+def calculate_similarity(a:set=None, b:set=None, type="Jaccard"):
+    if a is None or b is None:
+        return 0.0
+    
+    if type == 'Jaccard':
+        return calculate_jaccard_similarity(a, b)
+    elif type == 'Sorensen':
+        return calculate_sorensen_similarity(a, b)
+    # elif type == 'Tversky':
+    #     return calculate_tversky_similarity(a, b)
+
+    return calculate_overlap_similarity(a, b)
+
+def combine_overlapping_sets(list_of_sets):
+
+    result = []
+    while list_of_sets:
+        current_set = list_of_sets.pop()
+        sets_to_merge = []
+
+        for i, other_set in enumerate(list_of_sets):
+            if current_set.intersection(other_set):
+                sets_to_merge.append(i)
+
+        for index in sorted(sets_to_merge, reverse=True):
+            current_set.update(list_of_sets.pop(index))
+
+        result.append(current_set)
+
+    return result
+
+def evaluate(driver, gt, similarity='Jaccard', penalty=None, writer=None):
+
+    communities = []
+
+    with driver.session() as session:
+        query = """
+            MATCH (n)
+            WITH n.seed_label as community, COLLECT(n.id) AS ids
+            RETURN community, ids
+            ORDER BY community
+        """
+        result = session.run(query)
+
+        for r in result:
+            communities.append(set(r["ids"]))
+    
+    # writer.write(f"[INFO]   {communities}\n")
+
+    unmatched = []
+    wt_avg = 0.0
+
+    # n = len(communities)
+    # communities_copy = copy.deepcopy(communities)
+    similarities = []
+    for a in gt:
+        max_sim = -sys.maxsize
+        match = None
+
+        for b in communities:
+            sim = calculate_similarity(a=a, b=b, type=similarity)
+            if sim > max_sim and abs(sim - 0.0) > 0.01:
+                max_sim = sim
+                match = b
+
+        if match is not None and match in communities:
+            similarities.append(max_sim)
+            communities.remove(match)
+
+        elif match is None:
+            unmatched.append(a)
+
+    unmatched = combine_overlapping_sets(unmatched)
+    writer.write(f"[INFO]   Unmatched non-overlapping ground truth communities: {len(unmatched)}\n")
+
+    unmatched = len(unmatched)
+
+    wt_avg = sum(similarities)
+    n = len(similarities)
+
+    if penalty:
+
+        # Penalty if there are communities in gt which are unmatched
+        # wt_avg += unmatched * (-1.0 * unmatched / len(gt))
+        n += unmatched
+
+        # Penalty if there are communities in `communities` which are extra
+        rem=0
+        for _ in communities:
+            rem += 1
+        writer.write(f"[INFO]   Unmatched generated communities: {rem}\n")
+        n += rem
+
+
+
+    writer.write(f"[INFO]   {similarity} similarity index with{''if penalty else 'out'} penalty: {max(0.0, 1.0 * wt_avg / n)}\n")
+
+    return max(0.0, 1.0 * wt_avg / n)
 
 
 def label_propagation(driver, repetitions=1, tolerance = 0, writer=None):
@@ -69,7 +184,7 @@ def label_propagation(driver, repetitions=1, tolerance = 0, writer=None):
 
         prev = curr
         
-    writer.write("[INFO]   Done. ")
+    writer.write("[INFO]   Done. \n")
 
 def main():
     neo4j_url = sys.argv[1]
@@ -82,23 +197,37 @@ def main():
     contents = f"[{','.join(contents)}]"
     contents = json.loads(contents)
 
-    f = open('project.txt', 'w+')
-
     try:
 
         for query in contents:
-            f.write(f"{query}\n")
-            db_name, t, epsilon = query["database"], query["repetitions"], query["tolerance"]
+            db_name, t, epsilon, similarity, gt_file = query["database"], query["repetitions"], query["tolerance"], query.get("similarity"), query.get("gt_file")
+            gt = []
+            log_path = os.path.join("logs", f"{db_name}")
+            if not os.path.exists(log_path):
+                os.makedirs(log_path)
+            f = open(os.path.join(log_path, "log.txt"), 'a+')
+            f.write(f"[INFO]    Test case: {query}\n\n")
 
             with get_neo4j_connection(neo4j_folder, db_name, neo4j_url) as driver:
                 driver.verify_connectivity()
 
-                # init(driver)
+                init(driver)
 
                 label_propagation(driver, repetitions=t, tolerance=epsilon, writer=f)
 
-            f.write("\n\n")
+                if gt_file is not None:
+                    with open(gt_file) as gt_open:
+                        lines = gt_open.readlines()
+                        for l in lines:
+                            gt.append(set([int(a) for a in l.split()]))
 
+                    f.write(f"[INFO]    Ground Truth communities: {len(gt)}\n")
+
+                    evaluate(driver, gt, similarity=similarity, penalty=True, writer=f)
+
+            f.write("\n\n")
+        
+            f.close()
 
         driver = get_neo4j_connection(neo4j_folder, 'fake-db', neo4j_url)
         driver.close()
