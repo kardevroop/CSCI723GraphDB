@@ -27,8 +27,7 @@
 			"{\"database\":\"ca-AstroPh\", \"repetitions\":100, \"tolerance\":0}",
 			"{\"database\":\"ca-HepPh\", \"repetitions\":100, \"tolerance\":0}",
 			"{\"database\":\"com-amazon\", \"repetitions\":100, \"tolerance\":0}",
-			"{\"database\":\"com-dblp\", \"repetitions\":100, \"tolerance\":0}",
-			"{\"database\":\"com-youtube\", \"repetitions\":100, \"tolerance\":0}"
+			"{\"database\":\"com-dblp\", \"repetitions\":100, \"tolerance\":0}"
 		]}
 	],
 
