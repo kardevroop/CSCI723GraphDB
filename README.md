@@ -1,5 +1,5 @@
 # Code Segment
-The code has been structured similar to the assignments in class. The base folder is *LabelPropagation* and needs ot be place inside the a folder with a student tag just like in the assignments, e.g. dk7405. Th entire project can be run using the GradingSoftware shared during our assignments. The next section mentions the steps for executing the project.
+The code has been structured similar to the assignments in class. The base folder is *LabelPropagation* and needs to be place inside the a folder with a student tag just like in the assignments, e.g. dk7405. The entire project can be run using the GradingSoftware shared during our assignments. The next section mentions the steps for executing the project.
 
 Folder path - $HOME/A8/dk7405/LabelPropagation/...
 
