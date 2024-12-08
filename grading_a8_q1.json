@@ -2,13 +2,13 @@
 	"__comment__" : "This is the Neo4j connection when you need multiple databases. This is because Neo4j community edition does not allow multiple databases as the same time. Thank you, Neo4j!",
 	"database_neo4j" : {
 		"__comment__": "Use 'bolt://localhost:[port]' to connect to your local Neo4j database.",
-		"url" : "bolt://localhost:7687",
+		"url" : "TODOTODO__YOUR_NEO4J_URL__TODOTODO",
 		"__comment__" : "This is the folder in which many Neo4j databases are present. For instance, if you use ./SNA/, ./SNA/X/ is expected to contain database X.",
-		"folder" : "/Users/devroopkar/Documents/RIT/Fall 2024/CSCI 723/SNA_TopDown_export/"
+		"folder" : "TODOTODO__MAIN_NEO4J_FOLDER__TODOTODO"
 	},
 
 	"__comment__" : "This is the name of the file that will contain everything (see below).",
-	"in_file" : "query_q8.txt",
+	"in_file" : "TODOTODO__IN_FILE__TODOTODO",
 
 
 
@@ -39,7 +39,6 @@
 		{"database": "ca-HepPh", "query": "MATCH (n:Node) CALL {WITH n SET n.seed_label = n.id} IN TRANSACTIONS OF 1000 ROWS"},
 		{"database": "com-amazon", "query": "MATCH (n:Node) CALL {WITH n SET n.seed_label = n.id} IN TRANSACTIONS OF 1000 ROWS"},
 		{"database": "com-dblp", "query": "MATCH (n:Node) CALL {WITH n SET n.seed_label = n.id} IN TRANSACTIONS OF 1000 ROWS"},
-		{"database": "com-youtube", "query": "MATCH (n:Node) CALL {WITH n SET n.seed_label = n.id} IN TRANSACTIONS OF 1000 ROWS"},
 
 
 		{"database": "fake-db", "query": "MATCH (n:Node) CALL {WITH n REMOVE n.psi} IN TRANSACTIONS OF 1000 ROWS"}
