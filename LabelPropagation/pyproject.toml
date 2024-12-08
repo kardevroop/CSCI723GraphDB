@@ -6,7 +6,7 @@ build-backend = "poetry.core.masonry.api"
 name = "prob"
 version = "0.1.0"
 description = "Project"
-authors = [ "Devroop Kar <dk7405@g.rit.edu>",]
+authors = [ "Devroop Kar <dk7405@g.rit.edu>", "Beshani Weralupitiya <bw4052@g.rit.edu>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
