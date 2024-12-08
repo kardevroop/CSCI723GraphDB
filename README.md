@@ -15,6 +15,8 @@ Folder path - $HOME/A8/dk7405/LabelPropagation/...
  	- gt_file: These files are given. Keep it in the parent folder and use the absolute path to the ground truth communities file.
 	- similarity: Which coefficient to use among 'Jaccard', 'Sorensen', and 'Overlap'
 	- penalty: whether to penalize or not (true/false)
+  	- Example: "{\"database\":\"com-youtube\", \"repetitions\":100, \"tolerance\":0, \"gt_file\": \"/Users/devroopkar/Documents/RIT/Fall 2024/CSCI 723/GroundTruths/com-youtube/com-youtube.all.cmty.txt\", \"similarity\": \"Jaccard\", \"penalty\": false}"
+   	
 
 #### Grading Software
 To install: 
