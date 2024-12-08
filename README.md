@@ -10,7 +10,8 @@ Folder path - $HOME/A8/dk7405/LabelPropagation/...
  - Fill in the absolute paths to the data parent folder, the query file, and the neo4j connection in the config file.
  - Once the above steps are done, open a command prompt and follow the below steps for the grading software.
  - The program will create files in the LabelPropagation/ folder to log the outputs.
- - For running evaluations, specify the below parameters in the config file test cases,
+ - Running evaluation takes a considerable amount of time and memory (For Amazon, time: 5+ hrs and memory: 512mb-1 GB).
+ - For running evaluations, increase the memory limit on grading software and specify the below parameters in the config file test cases,
  	- gt_file: These files are given. Keep it in the parent folder and use the absolute path to the ground truth communities file.
 	- similarity: Which coefficient to use among 'Jaccard', 'Sorensen', and 'Overlap'
 	- penalty: whether to penalize or not (true/false)
