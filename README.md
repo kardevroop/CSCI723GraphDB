@@ -19,7 +19,7 @@ Folder path - $HOME/A8/dk7405/LabelPropagation/...
 	- similarity: Which coefficient to use among 'Jaccard', 'Sorensen', and 'Overlap'
 	- penalty: whether to penalize or not (true/false)
   	- Example: "{\"database\":\"com-youtube\", \"repetitions\":100, \"tolerance\":0, \"gt_file\": \"/Users/devroopkar/Documents/RIT/Fall 2024/CSCI 723/GroundTruths/com-youtube/com-youtube.all.cmty.txt\", \"similarity\": \"Jaccard\", \"penalty\": false}"
-   - Follow the last 2 steps in Execution 1. and check the log outputs to see the results.
+- Follow the last 2 steps in Execution 1. and check the log outputs to see the results.
    	
 
 ## Grading Software
