@@ -1,2 +1,6 @@
 *.txt
+!GroundTruths/com-amazon/*
+!GroundTruths/com-dblp/*
+!GroundTruths/com-youtube/*
+
 logs
