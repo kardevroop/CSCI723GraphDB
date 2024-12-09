@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "gradingsoftware"
+version = "0.1.0"
+description = "This is the grading software to run Python solutions."
+authors = ["Carlos Rivero <crr@cs.rit.edu>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+psutil = "^5.9.6"
+toml = "^0.10.2"
+neo4j = "^5.19.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+entry-point = "gradingsoftware.edu.rit.gdb.grading.GradingSoftware:main"
