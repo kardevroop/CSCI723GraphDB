@@ -1,7 +1,26 @@
 # How to run the code
-The code has been structured similarly to the assignments in class. The base folder is *LabelPropagation* and needs to be placed inside the folder with a student tag just like in the assignments, e.g. dk7405. The entire project can be run using the GradingSoftware shared during our assignments. The next section mentions the steps for executing the project.
+The code has been structured similarly to the assignments in class. The base folder is *LabelPropagation* and will be placed inside a folder with a student tag name just like in the assignments, e.g. dk7405. The entire project can be run using the GradingSoftware shared during our assignments. The succeeding sections mention the folder structure used and the steps for executing the project.
 
-Folder path - $HOME/A8/dk7405/LabelPropagation/...
+## Folder Structure
+Folder path for LablePropagation folder - $HOME/A8/dk7405/LabelPropagation/...
+Folder path for GradingSoftware folder - $HOME/GradingSoftware/...
+
+Our folder structure:
+.
+├── A8
+│   └── dk7405
+│       ├── LabelPropagation
+├── GradeConfigs
+│   └── a8
+│       └── grading_a8_q1.json
+├── GradingSoftware
+├── GroundTruths
+│   ├── com-amazon
+│   │   └── com-amazon.all.dedup.cmty.txt
+│   ├── com-dblp
+│   │   └── com-dblp.all.cmty.txt
+│   └── com-youtube
+│       └── com-youtube.all.cmty.txt
 
 ## Execution Steps
  ### 1. Execution of preliminary test cases.
@@ -19,7 +38,7 @@ Folder path - $HOME/A8/dk7405/LabelPropagation/...
  - The program will create files in the LabelPropagation/ folder to log the outputs.
    
  ### 2. Execution of Community Analysis with ground truth
- - Running this evaluation takes a considerable amount of time and memory (For Amazon, time: 5+ hrs and memory: 512mb-1 GB).
+ - Running this evaluation takes a considerable amount of time and memory (For Amazon, time: 5+ hrs and memory: >= 1 GB).
  - For running this evaluation, increase the memory limit on grading software and specify these additional parameters in the config file test cases,
  	- gt_file: These files are given. Keep it in the parent folder and use the absolute path to the ground truth communities file.
 	- similarity: Which coefficient to use among 'Jaccard', 'Sorensen', and 'Overlap'
