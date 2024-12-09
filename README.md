@@ -15,7 +15,7 @@ Folder path - $HOME/A8/dk7405/LabelPropagation/...
 	- com-youtube
  - Inside the zip folder the config file will be present marked *grading_a8_q1.json*. Put it in some other location and copy the absolute path to it.
  - Fill in the absolute paths to the data parent folder, the query file, and the neo4j connection in the config file.
- - Once the above steps are done, open a command prompt and follow the below steps for the grading software.
+ - Once the above steps are done, open a command prompt and follow the steps mentioned under grading software.
  - The program will create files in the LabelPropagation/ folder to log the outputs.
    
  ### 2. Execution of Community Analysis with ground truth
