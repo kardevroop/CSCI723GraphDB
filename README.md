@@ -6,7 +6,13 @@ Folder path - $HOME/A8/dk7405/LabelPropagation/...
 ## Execution Steps
  ### 1. Execution of preliminary test cases.
  - Extract the zip folder and put it inside a folder named **A8**.
- - The individual datasets should be present inside a parent folder.
+ - The individual datasets should be present inside a parent folder. The below datasets were used for this work and kept under the folder SNA/ (As in Assignment 4).
+	- Email-Enron
+	- ca-AstroPh
+	- ca-HepPh
+	- com-amazon
+	- com-dblp
+	- com-youtube
  - Inside the zip folder the config file will be present marked *grading_a8_q1.json*. Put it in some other location and copy the absolute path to it.
  - Fill in the absolute paths to the data parent folder, the query file, and the neo4j connection in the config file.
  - Once the above steps are done, open a command prompt and follow the below steps for the grading software.
