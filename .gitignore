@@ -4,3 +4,5 @@
 !GroundTruths/com-youtube/*
 
 logs
+
+*.pdf

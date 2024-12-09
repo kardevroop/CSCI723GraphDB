@@ -1,10 +1,10 @@
 # How to run the code
-The code has been structured similarly to the assignments in class. The base folder is *LabelPropagation* and will be placed inside a folder with a student tag name just like in the assignments, e.g. dk7405. The entire project can be run using the GradingSoftware shared during our assignments. The succeeding sections mention the folder structure used and the steps for executing the project.
+The code has been structured similarly to the assignments in class. The base folder is *LabelPropagation* and will be placed inside a folder with a student tag name just like in the assignments, e.g. dk7405. The entire project can be run using the GradingSoftware shared during our assignments. The succeeding sections mention the folder structure used and the steps for executing the project. Use the datasets for Assignment 4 - Social Network Analysis.
 
 ## Folder Structure
-Folder path for LablePropagation folder - $HOME/A8/dk7405/LabelPropagation/...
+Folder path for LablePropagation folder - $HOME/A8/dk7405/LabelPropagation/
 
-Folder path for GradingSoftware folder - $HOME/GradingSoftware/...
+Folder path for GradingSoftware folder - $HOME/GradingSoftware/
 
 Our folder structure:
 ```
