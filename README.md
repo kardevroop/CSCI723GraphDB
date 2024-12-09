@@ -3,6 +3,7 @@ The code has been structured similarly to the assignments in class. The base fol
 
 ## Folder Structure
 Folder path for LablePropagation folder - $HOME/A8/dk7405/LabelPropagation/...
+
 Folder path for GradingSoftware folder - $HOME/GradingSoftware/...
 
 Our folder structure:
