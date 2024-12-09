@@ -1,4 +1,4 @@
-# Code Segment
+# How to run the code
 The code has been structured similarly to the assignments in class. The base folder is *LabelPropagation* and needs to be placed inside the folder with a student tag just like in the assignments, e.g. dk7405. The entire project can be run using the GradingSoftware shared during our assignments. The next section mentions the steps for executing the project.
 
 Folder path - $HOME/A8/dk7405/LabelPropagation/...
