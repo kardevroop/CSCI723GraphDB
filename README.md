@@ -7,6 +7,7 @@ Folder path for LablePropagation folder - $HOME/A8/dk7405/LabelPropagation/...
 Folder path for GradingSoftware folder - $HOME/GradingSoftware/...
 
 Our folder structure:
+```
 .
 ├── A8
 │   └── dk7405
@@ -22,6 +23,7 @@ Our folder structure:
 │   │   └── com-dblp.all.cmty.txt
 │   └── com-youtube
 │       └── com-youtube.all.cmty.txt
+```
 
 ## Execution Steps
  ### 1. Execution of preliminary test cases.
